@@ -1,5 +1,9 @@
 let boxes = document.querySelectorAll('.cell')
 let resStartBtn = document.getElementById('restartButton')
+let newGame = document.getElementById('newGame')
+let msgContainer = document.querySelector('.msg-container')
+let board = document.querySelector('.board')
+let winner = document.querySelector('#msg')
 
 let trunO = true
 
@@ -19,17 +23,69 @@ const winningPatterns = [
     [2, 4, 6]   // Right to left diagonal
 ];
 
-let text =
-    boxes.forEach((box) => {
-        box.addEventListener('click', () => {
-            if (trunO) {
-                box.innerText = 'X'
-                trunO = false
-            } else {
-                box.innerText = 'O'
-                trunO = true
-            }
-            console.log('btn clicked');
+const resetGame = () => {
+    trunO = true
+    enableBoxes()
+    board.style.display = 'grid'
+    msgContainer.classList.add('hide')
+    resStartBtn.style.display = 'flex'
 
-        })
+
+}
+
+let text = boxes.forEach((box) => {
+    box.addEventListener('click', () => {
+        if (trunO) {
+            box.innerText = 'X'
+            trunO = false
+        } else {
+            box.innerText = 'O'
+            trunO = true
+        }
+        console.log('btn clicked');
+        box.disabled = true
+        checkWinner()
     })
+})
+
+//check Winner
+
+const checkWinner = () => {
+    for (let pattern of winningPatterns) {
+
+        let pos1Val = boxes[pattern[0]].innerText
+        let pos2Val = boxes[pattern[1]].innerText
+        let pos3Val = boxes[pattern[2]].innerText
+        if (pos1Val != '' || pos2Val != '' || pos3Val != '') {
+            if (pos1Val === pos2Val && pos2Val === pos3Val) {
+                console.log('winner', pos1Val);
+                shoWinner(pos1Val)
+                // alert(`Player ${pos1Val} wins!`)
+            }
+        }
+    }
+}
+
+const disableBoxes = () => {
+    for (let box of boxes) {
+        box.disabled = true
+    }
+}
+const enableBoxes = () => {
+    for (let box of boxes) {
+        box.disabled = false
+        box.innerText = ''
+    }
+}
+
+const shoWinner = (winner) => {
+    msg.innerText = `Congratulations winner is ${winner}`
+    msgContainer.classList.remove('hide')
+    board.style.display = 'none'
+    resStartBtn.style.display = 'none'
+
+    disableBoxes
+}
+
+newGame.addEventListener('click', resetGame)
+resStartBtn.addEventListener('click', resetGame)

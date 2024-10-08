@@ -22,6 +22,20 @@ h1 {
     color: #333;
 }
 
+#msg {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.hide {
+    display: none;
+}
+
+.on {
+    display: flex;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
@@ -60,5 +74,20 @@ h1 {
 }
 
 #restartButton:hover {
+    background-color: #555;
+}
+
+#newGame {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#newGame:hover {
     background-color: #555;
 }
