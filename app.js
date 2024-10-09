@@ -58,7 +58,6 @@ const checkWinner = () => {
                 shoWinner(pos1Val)
                 hasWinner = true
                 return
-                // alert(`Player ${pos1Val} wins!`)
             }
         }
         if (!hasWinner && Array.from(boxes).every(box => box.innerText !== '')) {
