@@ -29,8 +29,6 @@ const resetGame = () => {
     board.style.display = 'grid'
     msgContainer.classList.add('hide')
     resStartBtn.style.display = 'flex'
-
-
 }
 
 let text = boxes.forEach((box) => {
@@ -42,7 +40,6 @@ let text = boxes.forEach((box) => {
             box.innerText = 'O'
             trunO = true
         }
-        console.log('btn clicked');
         box.disabled = true
         checkWinner()
     })
@@ -51,17 +48,24 @@ let text = boxes.forEach((box) => {
 //check Winner
 
 const checkWinner = () => {
+    let hasWinner = false
     for (let pattern of winningPatterns) {
-
         let pos1Val = boxes[pattern[0]].innerText
         let pos2Val = boxes[pattern[1]].innerText
         let pos3Val = boxes[pattern[2]].innerText
         if (pos1Val != '' || pos2Val != '' || pos3Val != '') {
             if (pos1Val === pos2Val && pos2Val === pos3Val) {
-                console.log('winner', pos1Val);
                 shoWinner(pos1Val)
+                hasWinner = true
+                return
                 // alert(`Player ${pos1Val} wins!`)
             }
+        }
+        if (!hasWinner && Array.from(boxes).every(box => box.innerText !== '')) {
+            msg.innerText = `Match Draw`
+            msgContainer.classList.remove('hide')
+            board.style.display = 'none'
+            resStartBtn.style.display = 'none'
         }
     }
 }
@@ -83,7 +87,6 @@ const shoWinner = (winner) => {
     msgContainer.classList.remove('hide')
     board.style.display = 'none'
     resStartBtn.style.display = 'none'
-
     disableBoxes
 }
 
